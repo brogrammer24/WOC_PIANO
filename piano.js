@@ -1,3 +1,4 @@
+console.log(" in piano ")
 
 
 var nob = document.querySelectorAll(".btn").length;
@@ -80,10 +81,18 @@ document.addEventListener("keydown",function(event){
     makeSound(event.key);
 });
 
-function buttonPressed(currentKey){
-   var pressedButton=document.querySelector("."+currentKey);
-   pressedButton.classList.add("pressed");
-   setTimeout(function(){
-     pressedButton.classList.remove("pressed");
-   },100);
+firebase.auth().onAuthStateChanged((user)=>{
+    if(!user){
+        location.replace("index.html")
+    }
+    else{
+        document.getElementById("user").innerHTML= "Hello, "+user.email
+    }
+})
+
+function logout(){
+    firebase.auth().signOut().then(()=>{
+        location.replace("index.html")
+    })
+      
 }
