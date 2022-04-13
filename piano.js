@@ -190,11 +190,11 @@ function showTime() {
 console.log(" in piano ")
 const recBtn = document.querySelector(".recbtn"),
     playBtn = document.querySelector(".playbtn");
-// saveBtn = document.querySelector(".savebtn");
+
 
 recBtn.addEventListener("click", record);
 playBtn.addEventListener("click", playSong);
-// saveBtn.addEventListener("click", saveSong);
+
 function record() {
 
     recBtn.classList.toggle("recording");
@@ -205,21 +205,21 @@ function record() {
         stopRecording();
     }
 }
-// console.log(" in piano ")
+
 function isRecording() {
     return recBtn != null && recBtn.classList.contains("recording");
 }
 function startRecording() {
     playBtn.classList.remove("activated");
-    // saveBtn.classList.remove("activated");
+    
     startTime = Date.now();
     playedNotes = [];
     recordTime = [];
 }
 function stopRecording() {
-    // playSong();
+    
     playBtn.classList.add("activated");
-    // saveBtn.classList.add("activated");
+    
 
 }
 function playSong() {
@@ -261,23 +261,20 @@ prevSong.on("value", (snapshot) => {
         allSong.push(arr[i]);
     }
     for (var i = 0; i < allSong.length; i++) {
+        if(allSong[i].username==ID){
         var ul = document.getElementById("songList");
         var li = document.createElement("li");
-        // li.appendChild(document.createTextNode(allSong[i].songname));
         li.appendChild(document.createTextNode(allSong[i].songid));
         li.setAttribute("class", "allsongs");
         ul.appendChild(li);
+        }
     }
     const songs = document.querySelectorAll(".allsongs");
     var nos = document.querySelectorAll(".allsongs").length;
-    console.log(nos);
-    console.log(songs[3].innerHTML);
-    console.log(allSong[3].songid);
-    console.log(ID);
     for (var i = 0; i < nos; i++) {
-        // var sn = songs[i].innerHTML;
+        
         songs[i].addEventListener("click", function () {
-            // var sn = songs[i].innerHTML;
+            
             var sn= this.innerHTML;
             for (var j = 0; j < allSong.length; j++) {
                 if (allSong[j].username == ID && allSong[j].songid == sn) {
@@ -297,18 +294,6 @@ prevSong.on("value", (snapshot) => {
                   },(final[x].time)[i]);
     }
 })
-
-
-// firebase.database().ref("recordings/"+ ID).get().then((snapshot)=>{
-//     if(snapshot.exists()){
-//         const obj=snapshot.val();
-//         allSong.push({obj});
-//         // allSong.push();
-
-
-//         }
-//     })
-
 
 function saveSong() {
     const SongName = document.getElementById("songname").value;
