@@ -253,30 +253,133 @@ function doSetTimeout(i) {
 
     }, recordTime[i]);
 }
-var allSong=[];
-var prevSong=firebase.database().ref("recordings/"+ID);
-prevSong.on("value",(snapshot)=>{
-    const obj=snapshot.val();
-    allSong.push({obj});
+var allSong = [];
+var prevSong = firebase.database().ref("recordings/");
+prevSong.on("value", (snapshot) => {
+    const arr = snapshot.val();
+    for (var i = 0; i < arr.length; i++) {
+        allSong.push(arr[i]);
+    }
+    for (var i = 0; i < allSong.length; i++) {
+        var ul = document.getElementById("songList");
+        var li = document.createElement("li");
+        // li.appendChild(document.createTextNode(allSong[i].songname));
+        li.appendChild(document.createTextNode(allSong[i].songid));
+        li.setAttribute("class", "allsongs");
+        ul.appendChild(li);
+    }
+    const songs = document.querySelectorAll(".allsongs");
+    var nos = document.querySelectorAll(".allsongs").length;
+    console.log(nos);
+    console.log(songs[3].innerHTML);
+    console.log(allSong[3].songid);
+    console.log(ID);
+    for (var i = 0; i < nos; i++) {
+        // var sn = songs[i].innerHTML;
+        songs[i].addEventListener("click", function () {
+            // var sn = songs[i].innerHTML;
+            var sn= this.innerHTML;
+            for (var j = 0; j < allSong.length; j++) {
+                if (allSong[j].username == ID && allSong[j].songid == sn) {
+                    for (var k = 0; k < (allSong[j].music).length; k++) {
+                        setTheTime(k,j);
+                        console.log("help")
+                    }
+
+                }
+            }
+        })
+    }
+    const final=snapshot.val(); //
+    function setTheTime(i,x){
+        setTimeout(function(){
+                      makeSound((final[x].music)[i]);
+                  },(final[x].time)[i]);
+    }
 })
+
+
+// firebase.database().ref("recordings/"+ ID).get().then((snapshot)=>{
+//     if(snapshot.exists()){
+//         const obj=snapshot.val();
+//         allSong.push({obj});
+//         // allSong.push();
+
+
+//         }
+//     })
+
+
 function saveSong() {
     const SongName = document.getElementById("songname").value;
-     var Ref=firebase.database().ref("recordings/"+ ID);
-     var obj={songname: SongName,music: playedNotes,time: recordTime};
-     allSong.push({obj});
+    var Ref = firebase.database().ref("recordings/");
+
+
+    allSong.push({ username: ID, songid: SongName, music: playedNotes, time: recordTime });
     Ref.set(allSong);
-
+    var ul = document.getElementById("songList");
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(SongName));
+    li.setAttribute("class", "allsongs");
+    ul.appendChild(li);
 }
+// const songs=document.querySelectorAll(".allsongs");
+// console.log("hello2u")
 
-var ID="";
+//  var nos=document.querySelectorAll(".allsongs").length;
+
+// // for(var i=0;i<nos;i++){
+
+// console.log("hello2u")
+// console.log(nos)
+// var sn=songs[i];
+//     songs[i].addEventListener("click",function(sn){
+//         // var ids=this.innerHTML;
+//         var recSongs=firebase.database().ref("recordings/");
+//         recSongs.on("value",(snapshot)=>{
+//             const songarr=snapshot.val();
+//             for(var i=0;i<songarr.length;i++){
+//                  if(songarr[i].username==user.uid && songarr[i].songid==sn){
+//                     for(var j=0;j<(songarr[i].music).length;j++){
+//                                         //  setTheTime(j);
+//                                         console.log("yes")
+// setTimeout(function () {
+//     makeSound((songarr[i].music)[j]);
+// }, (songarr[i].time)[j]);
+//                                    }
+//                  }
+//             }
+//         })
+//     });
+//     // confirm.log("inside")
+
+// }
+// function playfromDB(x){
+//     for(var i=0;i<allSong.length;i++){
+//         if(allSong[i].username==ID && allSong[i].songid==x){
+//            for(var j=0;j<(allSong[i].music).length;j++){
+//                  setTheTime(j);
+//            }
+//         }
+//     }
+//     console.log(x);
+// }
+// console.log("hiiii")
+// function setTheTime(i){
+//       setTimeout(function(){
+//           makeSound((songarr[i].music)[i]);
+//       },(songarr[i].time)[i]);
+// }
+
+var ID = "";
 firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.replace("index.html")
     }
     else {
         document.getElementById("user").innerHTML = "Hello, " + user.email
-        
-        ID=user.uid;
+
+        ID = user.uid;
     }
 })
 
