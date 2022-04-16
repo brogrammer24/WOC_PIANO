@@ -12,6 +12,12 @@ for (var i = 0; i < nob; i++) {
         makeSound(key);
     });
 }
+const White_Keys=['z','x','c','v','b','n','m',',','.','/'];
+const Black_Keys=['s','d','g','h','j','l',';'];
+const whitekeys=document.querySelectorAll(".btn.white");
+const blackkeys=document.querySelectorAll(".btn.black");
+
+
 window.makeSound = function (key) {
     if (isRecording()) {
         recordNote(key);
@@ -58,63 +64,75 @@ window.makeSound = function (key) {
             break;
         case "X":
         case "x":
-        case "C#":
+        case "Db":
             var X = new Audio('notes/notes_X.mp3');
             X.play();
             break;
         case "Y":
         case "y":
-        case "D#":
+        case "Eb":
             var Y = new Audio('notes/notes_Y.mp3');
             Y.play();
             break;
         case "Z":
         case "z":
-        case "F#":
+        case "Gb":
             var Z = new Audio('notes/notes_Z.mp3');
             Z.play();
             break;
         case "S":
         case "s":
-        case "G#":
+        case "Ab":
             var S = new Audio('notes/notes_S.mp3');
             S.play();
             break;
         case "T":
         case "t":
-        case "A#":
+        case "Bb":
             var T = new Audio('notes/notes_T.mp3');
             T.play();
             break;
     }
+    
+
 
 };
-// function btnModifier(currentKey) {
 
-//     var pressedbtn = document.querySelector("." + currentKey);
-//     pressedbtn.classList.add("pressed");
-//     setTimeout(function () {
-//         pressedbtn.classList.remove("pressed");
-//     }, 100);
-
-// }
 document.addEventListener("keydown", function (event) {
-    makeSound(event.key);
-    // btnModifier(event.key);
+     if(event.repeat){
+         return;
+     }
+    const IndexOfWhite=White_Keys.indexOf(event.key);
+    const IndexOfBlack=Black_Keys.indexOf(event.key);
+    if(IndexOfWhite>-1)
+    {
+        makeSound(whitekeys[IndexOfWhite].innerHTML);
+       btnModifier(whitekeys[IndexOfWhite].innerHTML);
+          
+    }
+    if(IndexOfBlack>-1){
+        makeSound(blackkeys[IndexOfBlack].innerHTML);
+        btnModifier(blackkeys[IndexOfBlack].innerHTML);
+        
+    }
+    
+
 });
 
-// document.addEventListener("keydown",function(event){
-//     makeSound(event.key);
-//     buttonAnimation(event.key);
-//   });
-//   function buttonAnimation(currentKey)
-//   {
-//     var activebutton=document.querySelector("."+currentKey);
-//     activebutton.classList.add("pressed");
-//     setTimeout(function(){
-//       activebutton.classList.remove("pressed");
-//     },100);
-//   }
+
+  function btnModifier(currentkey)
+  {
+      console.log(currentkey)
+    var activebutton=document.querySelector("."+currentkey);
+    
+    activebutton.classList.add("modify");
+    
+    setTimeout(function(){
+        activebutton.classList.remove("modify");
+        
+    },200);
+   
+  }
 
 
 
@@ -308,53 +326,7 @@ function saveSong() {
     li.setAttribute("class", "allsongs");
     ul.appendChild(li);
 }
-// const songs=document.querySelectorAll(".allsongs");
-// console.log("hello2u")
 
-//  var nos=document.querySelectorAll(".allsongs").length;
-
-// // for(var i=0;i<nos;i++){
-
-// console.log("hello2u")
-// console.log(nos)
-// var sn=songs[i];
-//     songs[i].addEventListener("click",function(sn){
-//         // var ids=this.innerHTML;
-//         var recSongs=firebase.database().ref("recordings/");
-//         recSongs.on("value",(snapshot)=>{
-//             const songarr=snapshot.val();
-//             for(var i=0;i<songarr.length;i++){
-//                  if(songarr[i].username==user.uid && songarr[i].songid==sn){
-//                     for(var j=0;j<(songarr[i].music).length;j++){
-//                                         //  setTheTime(j);
-//                                         console.log("yes")
-// setTimeout(function () {
-//     makeSound((songarr[i].music)[j]);
-// }, (songarr[i].time)[j]);
-//                                    }
-//                  }
-//             }
-//         })
-//     });
-//     // confirm.log("inside")
-
-// }
-// function playfromDB(x){
-//     for(var i=0;i<allSong.length;i++){
-//         if(allSong[i].username==ID && allSong[i].songid==x){
-//            for(var j=0;j<(allSong[i].music).length;j++){
-//                  setTheTime(j);
-//            }
-//         }
-//     }
-//     console.log(x);
-// }
-// console.log("hiiii")
-// function setTheTime(i){
-//       setTimeout(function(){
-//           makeSound((songarr[i].music)[i]);
-//       },(songarr[i].time)[i]);
-// }
 
 var ID = "";
 firebase.auth().onAuthStateChanged((user) => {
@@ -376,6 +348,3 @@ function logout() {
 
 }
 
-console.log("database")
-
-console.log("database")
