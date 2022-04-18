@@ -25,18 +25,20 @@ window.makeSound = function (key) {
     switch (key) {
         case "C":
         case "c":
-
+        case "C1":
 
             var C = new Audio('notes/notes_C.mp3');
             C.play();
             break;
         case "D":
         case "d":
+        case "D1":
             var D = new Audio('notes/notes_D.mp3');
             D.play();
             break;
         case "E":
         case "e":
+        case "E1":
             var E = new Audio('notes/notes_E.mp3');
             E.play();
             break;
@@ -65,12 +67,14 @@ window.makeSound = function (key) {
         case "X":
         case "x":
         case "Db":
+        case "Db1":
             var X = new Audio('notes/notes_X.mp3');
             X.play();
             break;
         case "Y":
         case "y":
         case "Eb":
+        case "Eb1":
             var Y = new Audio('notes/notes_Y.mp3');
             Y.play();
             break;
