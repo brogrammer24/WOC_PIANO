@@ -39,4 +39,5 @@ Piano is a web application which allows users to play virtual piano.It also come
 3.After recording you can seach for you recorded song on the search bar.
 # Tech-Stack:
 1.Firebase: Back-end cloud computing service and application development platform.
+
 2.HTML,CSS and Javascript: Front-end development.
